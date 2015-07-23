@@ -1,0 +1,6 @@
+[template]
+src = "dd-agent-postgres.tmpl"
+dest = "/etc/dd-agent/conf.d/postgres.yaml"
+keys = [
+  "/"
+]

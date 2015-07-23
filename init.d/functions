@@ -1,0 +1,9 @@
+#!/bin/bash
+
+function pg_exec() {
+  gosu postgres postgres --single -jE <<-EOSQL
+  $@
+EOSQL
+
+echo
+}

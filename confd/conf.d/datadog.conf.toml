@@ -1,0 +1,7 @@
+[template]
+src = "datadog.conf.tmpl"
+dest = "/etc/dd-agent/datadog.conf"
+keys = [
+  "/"
+]
+

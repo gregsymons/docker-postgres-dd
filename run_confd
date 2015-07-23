@@ -1,0 +1,35 @@
+#!/bin/bash
+
+set -o pipefail
+
+function log() {
+  echo "===> $@"
+}
+
+function log_output() {
+  while read line; do
+    echo "  ---< $line"
+  done
+}
+
+function fail() {
+  exit_code=$1
+
+  log "!!! JOB FAILED !!!"
+  env | sort
+  builtin exit $exit_code
+}
+
+if [[ $DEBUG ]]; then
+  log_level=debug
+else
+  log_level=info
+fi
+
+log "Configuring DataDog agent..."
+
+(confd -onetime -backend env -log-level $log_level 2>&1) | log_output || fail $?
+
+export PATH=/opt/datadog-agent/embedded/bin:/opt/datadog-agent/bin:$PATH
+
+exec $@
